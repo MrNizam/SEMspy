@@ -1,0 +1,97 @@
+<html>
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="popup.js"></script>
+	<style>
+		/* Extending The Inheritances */
+
+/* Custom color */
+.button-black {
+  background-color: black;
+  border-color: black;
+}
+.button-black.button-clear,
+.button-black.button-outline {
+  background-color: transparent;
+  color: black;
+}
+.button-black.button-clear {
+  border-color: transparent;
+}
+
+/* Custom size */
+.button-small {
+  font-size: .8rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  padding: 0 1.5rem;
+  margin-right:5px;
+}
+
+.button-large {
+  font-size: 1.4rem;
+  height: 4.5rem;
+  line-height: 4.5rem;
+  padding: 0 2rem;
+}
+
+#str{
+	height:600px;
+	width:750px;
+}
+* {
+  border-radius: 0 !important;
+}
+#event-list{
+	font-size:12px;
+}
+td{
+	padding:0px;
+}
+	</style>
+</head>
+<body >
+<div id='str' class=''>
+	<div class='bg-warning row'>
+		<b>Event Tracking Tracker </b>
+		<div>
+
+		</div>
+
+		<div class="bg-dark text-white">	
+			<a href="#" class='btn btn-secondary' id="reset-list" title="Reset List">RESET</a>
+		</div>
+	</div>
+	<div class="">
+		<div class="tabs">
+			
+		</div>
+		<div class="content">
+			<table id="event-table" class='table table-striped table-hover table-sm table-responsive table-bordered'>
+				<thead>
+					<tr>
+						
+						<th><a href="#" id="expander">UA String <span class="harr">&harr;</span></a></th>
+						
+						<th scope="col">Category</th>
+						<th scope="col">Action</th>
+						<th scope="col">Label</th>
+						<th scope="col">Value</th>
+					</tr>
+				</thead>
+				<tbody id="event-list">
+					<tr>
+						<td colspan="6" align="center">
+							<i>Nothing Yet</i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body>
+</html>
