@@ -13,11 +13,20 @@
   		"128": "ett.png"
   	},
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": ["background.js","jquery-3.2.1.slim.min.js", "popper.min.js" , "bootstrap.min.js" ],
+		"css": ["bootstrap.min.css" ],
 		"persistent": true
 	},
+	"content_scripts": [
+		{  
+		"matches":["<all_urls>"],
+		 "js": ["jquery-3.2.1.slim.min.js", "popper.min.js" , "bootstrap.min.js" ],
+		 "css": ["bootstrap.min.css" ]
+		}
+	 ],
 	"permissions": [
 		"webRequest",
+		"activeTab",
         "tabs", 
         "http://*/*", 
         "https://*/*"
