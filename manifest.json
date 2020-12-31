@@ -4,24 +4,24 @@
 	"manifest_version": 2,
 	"description": "Plugin to track GA Event Tracker event calls that persists across pages",
 	"browser_action": {
-	    "default_icon": "ett.png",
+	    "default_icon": "images/ett.png",
 	    "default_popup": "popup.html"
   	},
   	"icons": {
-  		"16": "ett16.png",
-  		"48": "ett48.png",
-  		"128": "ett.png"
+  		"16": "images/ett16.png",
+  		"48": "images/ett48.png",
+  		"128": "images/ett.png"
   	},
 	"background": {
-		"scripts": ["background.js","jquery-3.2.1.slim.min.js", "popper.min.js" , "bootstrap.min.js" ],
-		"css": ["bootstrap.min.css" ],
+		"scripts": ["background.js","js/jquery-3.2.1.slim.min.js", "js/popper.min.js" , "js/bootstrap.min.js" ],
+		"css": ["css/bootstrap.min.css" ],
 		"persistent": true
 	},
 	"content_scripts": [
 		{  
 		"matches":["<all_urls>"],
-		 "js": ["jquery-3.2.1.slim.min.js", "popper.min.js" , "bootstrap.min.js" ],
-		 "css": ["bootstrap.min.css" ]
+		 "js": ["js/jquery-3.2.1.slim.min.js", "js/popper.min.js" , "js/bootstrap.min.js" ],
+		 "css": ["css/bootstrap.min.css" ]
 		}
 	 ],
 	"permissions": [
