@@ -1,10 +1,33 @@
         var currentTab;
-        
+        var currentTabDom 
+// have chrome return dom soup
+
+chrome.tabs.executeScript({
+    code: `(${ inContent })()`
+  }, function(result ) {
+    if (!chrome.runtime.lastError) {
+        currentTabDom = result[0].html
+        popupCore()
+    }
+  });
+  function inContent(params) {
+    return {
+      success: true,
+      html: document.body.innerHTML
+    };
+}
+
+
+
+function popupCore(){
+
+
         
         // This callback function is called when the content script has been 
         // injected and returned its results
         function onPageInfo(o) 
-        { 
+        {
+            console.log(o)
         } 
 
         // POST the data to the server using XMLHttpRequest
@@ -17,31 +40,35 @@
             var requestData = chrome.extension.getBackgroundPage().eventObject; // capture of all requests
             var newhtml = '';
             var requestDataForCurrentTab = requestData.filter(function(x){ return x.tabId === currentTab;}); // new array from all requests, but only requests sent by the current tab
-            console.log(requestDataForCurrentTab)
-
+            //console.log(requestDataForCurrentTab)
 
             if(requestDataForCurrentTab.length ) {
                 for(var i = requestDataForCurrentTab.length-1; i > 0; i--) {
+                    
                     // parse the request
                     var requestUrl = requestDataForCurrentTab[i].url;
-                    console.log(requestUrl)
+                    
+                    //console.log(requestUrl)
+
 
     
                     category = getParameterByName(requestUrl, 'ec');
                     action = getParameterByName(requestUrl, 'ea');
                     label = getParameterByName(requestUrl, 'el');
-                    val = getParameterByName(requestUrl, 'ev');
+                    event = getParameterByName(requestUrl, 'ev');
                     uacode = getParameterByName(requestUrl, 'tid');
                     referer = getParameterByName(requestUrl, 'dl');
         
+
         
 
-
-
-
-
-
-
+                  /*  
+https://www.facebook.com/tr/?id=698287767460856&ev=Lead&dl=https%3A%2F%2Flp-code-sandbox.myshopify.com%2F&rl=&if=false&ts=1609458803598&sw=3840&sh=2160&v=2.9.31&r=stable&a=shopify&ec=2&o=30&fbp=fb.1.1609366203655.190668562&it=1609447235690&coo=false&rqm=GET&dt=wjtrv71mnecrrx5t9lc6wbcuwxj5uq7g
+https://www.google-analytics.com/collect?v=1&_v=j87&a=1864738205&t=event&_s=7&dl=https%3A%2F%2Flp-code-sandbox.myshopify.com%2F&dp=%2F&ul=en-us&de=UTF-8&dt=lp-code-sandbox&sd=24-bit&sr=3840x2160&vp=1162x2017&je=0&ec=contact&ea=submit&el=form&_u=SCCAgUABBAAAAG~&jid=&gjid=&cid=936459019.1609366203&tid=UA-111111111-1&_gid=1985570343.1609366203&did=BwiEti&z=1516252613
+https://bat.bing.com/action/0?ti=1111111111&Ver=2&mid=7c19bb9c-06b4-4616-b6e0-57b2d4b41048&sid=c40590804aeb11eb840eb12af8acc503&vid=342ceca03e4011eb92bb2d1a1c14bfe7&vids=0&ec=CATEGROY&ea=ACTION&el=LABEL&evt=custom&msclkid=N&rn=816721
+https://www.google.com/pagead/1p-conversion/CONVERSION_ID/?random=665448285&cv=9&fst=1609458953085&num=1&currency_code=%7B%7B%20shop.currency%20%7D%7D&label=CONVERSION_LABEL&bg=ffffff&guid=ON&resp=GooglemKTybQhCsO&u_h=2160&u_w=3840&u_ah=2130&u_aw=3840&u_cd=24&u_his=2&u_tz=-480&u_java=false&u_nplug=3&u_nmime=4&gtm=2oabu0&sendb=1&ig=1&data=event%3Dconversion&frm=0&url=https%3A%2F%2Flp-code-sandbox.myshopify.com%2F&tiba=lp-code-sandbox&hn=www.googleadservices.com&async=1&fmt=3&ctc_id=CAIVAgAAAB0CAAAA&ct_cookie_present=false&eoid=CkIKEQiAirb_BRCZ-4nQ6K3QjO4BEi0AUIzDM-hK0-L_TV_8ljBqJM4r3DOt-Jz692etCK5DuhYkWA-OQcBTXOXtsaLw_wcB&sscte=1&crd=&is_vtc=1&ocp_id=CmXuX-CRHM-CkwOn_bSoBQ&dclk_oo=1&random=715789942&resp=GooglemKTybQhCsO
+https://googleads.g.doubleclick.net/pagead/viewthroughconversion/CONVERSION_ID/?random=665448285&cv=9&fst=1609458953085&num=1&currency_code=%7B%7B%20shop.currency%20%7D%7D&label=CONVERSION_LABEL&bg=ffffff&guid=ON&resp=GooglemKTybQhCsO&u_h=2160&u_w=3840&u_ah=2130&u_aw=3840&u_cd=24&u_his=2&u_tz=-480&u_java=false&u_nplug=3&u_nmime=4&gtm=2oabu0&sendb=1&ig=1&data=event%3Dconversion&frm=0&url=https%3A%2F%2Flp-code-sandbox.myshopify.com%2F&tiba=lp-code-sandbox&hn=www.googleadservices.com&async=1&fmt=3&ctc_id=CAIVAgAAAB0CAAAA&ct_cookie_present=false&ocp_id=CmXuX-CRHM-CkwOn_bSoBQ&eoid=CkIKEQiAirb_BRCZ-4nQ6K3QjO4BEi0AUIzDM-hK0-L_TV_8ljBqJM4r3DOt-Jz692etCK5DuhYkWA-OQcBTXOXtsaLw_wcB&sscte=1&crd=
+*/
 
 
 
@@ -53,6 +80,8 @@
                         newhtml += '<td>' + requestDataForCurrentTab[i][4] + '</td>';
                         newhtml += '<td>' + requestDataForCurrentTab[i][5] + '</td>';
                     newhtml += '</tr>';
+
+
                 }
                 document.getElementById('event-list').innerHTML = newhtml;
             } else {
@@ -87,6 +116,19 @@
     
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
      
     function getParameterByName( url, name ) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -99,4 +141,29 @@
         } else {
             return decodeURIComponent(results[1].replace(/\+/g, " "));
         }
+    }
+
+
+
+
+    // CMS DETECTION
+
+        
+      console.log(typeof currentTabDom)
+      
+      let cmsDetectiveCases = {
+      'bigcommerce' :(currentTabDom.match(/bigcommerce/gi) || []).length,
+      'wordpress' :(currentTabDom.match(/wordpress/gi) || []).length,
+      'shopify' :(currentTabDom.match(/shopify/gi) || []).length,
+      'magento' : (currentTabDom.match(/magento/gi) || []).length, // M2 https://www.oshamanual.com/
+      'wix' : (currentTabDom.match(/wix/gi) || []).length, // https://www.animalmusicweb.com/
+      'drupal' : (currentTabDom.match(/drupal/gi) || []).length, // https://www.drupal.org/
+      'joomla' : (currentTabDom.match(/joomla/gi) || []).length, // https://www.lejourlepluscourt.be
+      'prestashop' : (currentTabDom.match(/prestashop/gi) || []).length, // https://www.maniac-auto.com/fr/
+      '3dcart' : (currentTabDom.match(/3dcart/gi) || []).length, // https://www.unicusdecor.com/
+      'squarespace' : (currentTabDom.match(/squarespace/gi) || []).length, // https://www.curibio.com/
+      }
+      
+      console.log(Object.keys(cmsDetectiveCases).reduce(function(a, b){ return cmsDetectiveCases[a] > cmsDetectiveCases[b] ? a : b }),cmsDetectiveCases // returm the CMS with the highest mentions
+      )
     }

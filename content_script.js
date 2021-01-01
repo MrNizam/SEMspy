@@ -7,3 +7,5 @@ var pageInfo = {
 
 // Send the information back to the extension
 chrome.extension.sendRequest(pageInfo);
+
+console.log(pageInfo)
