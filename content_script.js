@@ -1,3 +1,4 @@
+console.log('content_script.js')
 // Object to hold information about the current page
 var pageInfo = {
     "title": document.title,
@@ -8,4 +9,4 @@ var pageInfo = {
 // Send the information back to the extension
 chrome.extension.sendRequest(pageInfo);
 
-console.log(pageInfo)
+console.log('-- ',pageInfo)
