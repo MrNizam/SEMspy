@@ -15,21 +15,20 @@ var currentTabDom
 
 function popupCore() {
 
-
 cmsDetection()
 updateList()
-
 
 }
 
 
-
+    // ### This is code from the original extension, as far as I can see it is unused, look into and remove when optimizing. 
     // This callback function is called when the content script has been 
     // injected and returned its results
     function onPageInfo(o) {
         console.log(o)
     }
 
+    // ### This is code from the original extension, as far as I can see it is unused, look into and remove when optimizing. 
     // POST the data to the server using XMLHttpRequest
     function addBookmark(f) {
         return false;
@@ -37,9 +36,9 @@ updateList()
 
 
 
-function cmsDetection(){
-    console.log(typeof currentTabDom)
-
+function cmsDetection(){ 
+    // Google chrome apparently parses regex 98% faster than other browsers, saw it somewhere on stackoverflow.
+    // function to check the page dom, & check regex cases to count the mentions of each string, string with the highest mentions is confidence thats the actual cms / site tech
     let cmsDetectiveCases = {
         'bigcommerce': (currentTabDom.match(/bigcommerce/gi) || []).length,
         'wordpress': (currentTabDom.match(/wordpress/gi) || []).length,
@@ -53,6 +52,7 @@ function cmsDetection(){
         'squarespace': (currentTabDom.match(/squarespace/gi) || []).length, // https://www.curibio.com/
     }
 
+    // flatten the object and select the key with the highest value
     console.log(Object.keys(cmsDetectiveCases).reduce(function (a, b) {
             return cmsDetectiveCases[a] > cmsDetectiveCases[b] ? a : b
         }), cmsDetectiveCases // returm the CMS with the highest mentions
@@ -61,12 +61,12 @@ function cmsDetection(){
 
 
 function updateList() {
-    var requestData = chrome.extension.getBackgroundPage().eventObject; // capture of all requests
+    var requestData = chrome.extension.getBackgroundPage().eventObject; // capture of all requests from background.js listener
     var newhtml = '';
     var requestDataForCurrentTab = requestData.filter(function (x) {
         return x.tabId === currentTab;
     }); // new array from all requests, but only requests sent by the current tab id
-    console.log(requestDataForCurrentTab)
+    
     if (requestDataForCurrentTab.length) {
         for (var i = requestDataForCurrentTab.length - 1; i > 0; i--) {
 
@@ -74,8 +74,7 @@ function updateList() {
             var requestUrl = requestDataForCurrentTab[i].url;
             
 
-
-            let adPlatformId = {
+            let adPlatformId = { // going to use the same method as the CMS detection to try to do this efficiently
                 'googleAnalytics': (requestUrl.match(/google-analytics/gi) || []).length,
                 'facebookPixel': (requestUrl.match(/facebook/gi) || []).length,
                 'microsoftAds': (requestUrl.match(/bing/gi) || []).length,
@@ -105,7 +104,7 @@ https://googleads.g.doubleclick.net/pagead/viewthroughconversion/CONVERSION_ID/?
 */
 
 
-
+console.log('adPlatformId',adPlatformId , requestUrl)
 
             newhtml += '<tr class="entry">';
             newhtml += '<td>' + Object.keys(adPlatformId).reduce(function (a, b) {
